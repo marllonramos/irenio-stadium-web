@@ -1,0 +1,15 @@
+.list-player-root {
+    width: 100%;
+    /* max-width: 360px; */
+    background-color: #FFFFFF;
+}
+
+.list-player-inline {
+    display: inline;
+}
+
+.list-player-center {
+    align-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+}
