@@ -7,6 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 // import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import IconImg from "../IconImg";
+import { getPlayers } from "../../services";
 import "./index.css";
 
 class ListPlayer extends Component {
@@ -68,6 +69,11 @@ class ListPlayer extends Component {
         }
       ]
   };
+
+  async componentDidMount() {
+    const listPlayers = await getPlayers();
+    console.log(listPlayers.data);
+  }
 
   render() {
     return (

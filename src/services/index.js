@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const URL = 'https://minhaurl';
+const URL = 'https://jsonplaceholder.typicode.com';
 
 export const getPlayers = async () => {
     try {
-        const players = await axios.get(`${URL}/...`);
+        const players = await axios.get(`${URL}/users`);
         return players;
     } catch (error) {
         console.error('Fail on getPlayer', error);
