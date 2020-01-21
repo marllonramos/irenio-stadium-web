@@ -11,7 +11,8 @@ function App() {
     <>
       {/* <Header /> */}
       {/* <Login /> */}
-      <CrudPlayer />
+      {/* <CrudPlayer /> */}
+      <ListPlayer />
     </>
   );
 }

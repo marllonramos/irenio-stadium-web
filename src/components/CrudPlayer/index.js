@@ -7,99 +7,85 @@ import Typography from "@material-ui/core/Typography";
 import IconImg from "../IconImg";
 import { Button } from "@material-ui/core";
 import ModalCreatePlayer from "../ModalCreatePlayer";
-// import "./index.css";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { TextField } from "@material-ui/core";
 
 class CrudPlayer extends Component {
   state = {
     players: [
       {
-        id: Math.random(),
         nome: "Marllon Nascimento Ramos",
         gol: 17,
         assistencia: 9,
         destaque: 10,
-        hatTrick: 3
+        hatTrick: 3,
+        url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
       },
       {
-        id: Math.random(),
         nome: "Marllon Nascimento Ramos",
         gol: 17,
         assistencia: 9,
         destaque: 10,
-        hatTrick: 3
+        hatTrick: 3,
+        url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
       },
       {
-        id: Math.random(),
         nome: "Marllon Nascimento Ramos",
         gol: 17,
         assistencia: 9,
         destaque: 10,
-        hatTrick: 3
+        hatTrick: 3,
+        url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
       },
       {
-        id: Math.random(),
         nome: "Marllon Nascimento Ramos",
         gol: 17,
         assistencia: 9,
         destaque: 10,
-        hatTrick: 3
+        hatTrick: 3,
+        url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
       },
       {
-        id: Math.random(),
         nome: "Marllon Nascimento Ramos",
         gol: 17,
         assistencia: 9,
         destaque: 10,
-        hatTrick: 3
+        hatTrick: 3,
+        url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
       },
       {
-        id: Math.random(),
         nome: "Marllon Nascimento Ramos",
         gol: 17,
         assistencia: 9,
         destaque: 10,
-        hatTrick: 3
-      },
-      {
-        id: Math.random(),
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3
-      },
-      {
-        id: Math.random(),
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3
-      },
-      {
-        id: Math.random(),
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3
-      },
-      {
-        id: Math.random(),
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3
+        hatTrick: 3,
+        url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
       }
-    ]
+    ],
+    open: false
   };
 
   render() {
-    const { players } = this.state;
+    const { players, open } = this.state;
 
     const handleRemove = (id) => {
-        console.log(id);
+      console.log(id);
+    };
+
+    const handleUpdate = () => {
+      console.log('Atualizado!');
+      this.setState({ open: false });
+    };
+
+    const handleClickOpenUpdate = () => {
+      this.setState({ open: true });
+    };
+
+    const handleCloseUpdate = () => {
+      this.setState({ open: false });
     };
 
     return (
@@ -108,7 +94,7 @@ class CrudPlayer extends Component {
           {players.map(player => (
             <Fragment key={player.id}>
               <ListItem alignItems="flex-start">
-                <IconImg />
+                <IconImg url={player.url} />
                 <ListItemText
                   primary={player.nome}
                   secondary={
@@ -151,7 +137,7 @@ class CrudPlayer extends Component {
                     </Fragment>
                   }
                 />
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" onClick={handleClickOpenUpdate}>
                   <i className="fa fa-pen fa-1x"></i>
                 </Button>
                 &nbsp;&nbsp;
@@ -164,6 +150,58 @@ class CrudPlayer extends Component {
           ))}
         </List>
         <ModalCreatePlayer />
+        <div>
+          <Dialog open={open} onClose={handleCloseUpdate} aria-labelledby="form-dialog-title">
+            <DialogTitle id="form-dialog-title">Atualizar Jogador</DialogTitle>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="nome"
+                label="Nome"
+                type="text"
+                fullWidth
+                disabled={true}
+              />
+              <TextField
+                margin="dense"
+                id="gol"
+                label="Gol(s)"
+                type="number"
+                fullWidth
+              />
+              <TextField
+                margin="dense"
+                id="assistencia"
+                label="Assistência(s)"
+                type="number"
+                fullWidth
+              />
+              <TextField
+                margin="dense"
+                id="destaque"
+                label="Jogador da partida"
+                type="number"
+                fullWidth
+              />
+              <TextField
+                margin="dense"
+                id="hattrick"
+                label="Hat-trick"
+                type="number"
+                fullWidth
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseUpdate} color="secondary">
+                Cancelar
+              </Button>
+              <Button onClick={handleUpdate} color="primary">
+                Atualizar
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </Fragment>
     );
   }

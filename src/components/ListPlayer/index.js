@@ -13,74 +13,58 @@ class ListPlayer extends Component {
   state = {
     players: [
         {
+          id:1,
           nome: "Marllon Nascimento Ramos",
           gol: 17,
           assistencia: 9,
           destaque: 10,
-          hatTrick: 3
+          hatTrick: 3,
+          url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
         },
         {
+          id:2,
           nome: "Marllon Nascimento Ramos",
           gol: 17,
           assistencia: 9,
           destaque: 10,
-          hatTrick: 3
+          hatTrick: 3,
+          url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
         },
         {
+          id:3,
           nome: "Marllon Nascimento Ramos",
           gol: 17,
           assistencia: 9,
           destaque: 10,
-          hatTrick: 3
+          hatTrick: 3,
+          url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
         },
         {
+          id:4,
           nome: "Marllon Nascimento Ramos",
           gol: 17,
           assistencia: 9,
           destaque: 10,
-          hatTrick: 3
+          hatTrick: 3,
+          url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
         },
         {
+          id:5,
           nome: "Marllon Nascimento Ramos",
           gol: 17,
           assistencia: 9,
           destaque: 10,
-          hatTrick: 3
+          hatTrick: 3,
+          url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
         },
         {
+          id:6,
           nome: "Marllon Nascimento Ramos",
           gol: 17,
           assistencia: 9,
           destaque: 10,
-          hatTrick: 3
-        },
-        {
-          nome: "Marllon Nascimento Ramos",
-          gol: 17,
-          assistencia: 9,
-          destaque: 10,
-          hatTrick: 3
-        },
-        {
-          nome: "Marllon Nascimento Ramos",
-          gol: 17,
-          assistencia: 9,
-          destaque: 10,
-          hatTrick: 3
-        },
-        {
-          nome: "Marllon Nascimento Ramos",
-          gol: 17,
-          assistencia: 9,
-          destaque: 10,
-          hatTrick: 3
-        },
-        {
-          nome: "Marllon Nascimento Ramos",
-          gol: 17,
-          assistencia: 9,
-          destaque: 10,
-          hatTrick: 3
+          hatTrick: 3,
+          url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
         }
       ]
   };
@@ -89,9 +73,9 @@ class ListPlayer extends Component {
     return (
       <List className="list-player-root">
         {this.state.players.map(player=>
-            <Fragment>
+            <Fragment key={player.id}>
                 <ListItem alignItems="flex-start">
-                <IconImg />
+                <IconImg url={player.url} />
                 <ListItemText
                     primary={player.nome}
                     secondary={
