@@ -13,7 +13,7 @@ export const getPlayers = async () => {
 
 export const insertPlayer = async (player) => {
     try {
-        const result = await axios.post(`${URL}/...`, player);
+        const result = await axios.post(`${URL}/`, player);
         return result;
     } catch (error) {
         console.error('Fail on insertPlayer', error);
