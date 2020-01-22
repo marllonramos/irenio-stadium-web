@@ -72,7 +72,7 @@ class ListPlayer extends Component {
 
   async componentDidMount() {
     const listPlayers = await getPlayers();
-    console.log(listPlayers.data);
+    // console.log(listPlayers.data);
   }
 
   render() {
