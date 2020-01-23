@@ -3,7 +3,7 @@ import './index.css';
 
 const Header = () => {
     return (
-        <header class="cabecalho container">
+        <header className="cabecalho container">
             <h1>Estatísticas Irênio Stadium</h1>
         </header>
     );

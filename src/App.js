@@ -1,18 +1,14 @@
 import React from 'react';
-import Header from './components/Header';
-import ListPlayer from './components/ListPlayer';
 import CrudPlayer from './components/CrudPlayer';
-import Login from './components/Login';
+import Routes from './routes/routes';
 import './App.css';
 
 
 function App() {
   return (
     <>
-      {/* <Header /> */}
-      {/* <Login /> */}
       {/* <CrudPlayer /> */}
-      <ListPlayer />
+      <Routes />
     </>
   );
 }

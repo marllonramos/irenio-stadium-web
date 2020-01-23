@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import Header from '../Header';
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
@@ -13,61 +14,61 @@ import "./index.css";
 class ListPlayer extends Component {
   state = {
     players: [
-        {
-          id:1,
-          nome: "Marllon Nascimento Ramos",
-          gol: 17,
-          assistencia: 9,
-          destaque: 10,
-          hatTrick: 3,
-          url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
-        },
-        {
-          id:2,
-          nome: "Marllon Nascimento Ramos",
-          gol: 17,
-          assistencia: 9,
-          destaque: 10,
-          hatTrick: 3,
-          url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
-        },
-        {
-          id:3,
-          nome: "Marllon Nascimento Ramos",
-          gol: 17,
-          assistencia: 9,
-          destaque: 10,
-          hatTrick: 3,
-          url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
-        },
-        {
-          id:4,
-          nome: "Marllon Nascimento Ramos",
-          gol: 17,
-          assistencia: 9,
-          destaque: 10,
-          hatTrick: 3,
-          url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
-        },
-        {
-          id:5,
-          nome: "Marllon Nascimento Ramos",
-          gol: 17,
-          assistencia: 9,
-          destaque: 10,
-          hatTrick: 3,
-          url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
-        },
-        {
-          id:6,
-          nome: "Marllon Nascimento Ramos",
-          gol: 17,
-          assistencia: 9,
-          destaque: 10,
-          hatTrick: 3,
-          url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
-        }
-      ]
+      {
+        id: 1,
+        nome: "Marllon Nascimento Ramos",
+        gol: 17,
+        assistencia: 9,
+        destaque: 10,
+        hatTrick: 3,
+        url: "https://avatars0.githubusercontent.com/u/22670119?v=4"
+      },
+      {
+        id: 2,
+        nome: "Marllon Nascimento Ramos",
+        gol: 17,
+        assistencia: 9,
+        destaque: 10,
+        hatTrick: 3,
+        url: "https://avatars0.githubusercontent.com/u/22670119?v=4"
+      },
+      {
+        id: 3,
+        nome: "Marllon Nascimento Ramos",
+        gol: 17,
+        assistencia: 9,
+        destaque: 10,
+        hatTrick: 3,
+        url: "https://avatars0.githubusercontent.com/u/22670119?v=4"
+      },
+      {
+        id: 4,
+        nome: "Marllon Nascimento Ramos",
+        gol: 17,
+        assistencia: 9,
+        destaque: 10,
+        hatTrick: 3,
+        url: "https://avatars0.githubusercontent.com/u/22670119?v=4"
+      },
+      {
+        id: 5,
+        nome: "Marllon Nascimento Ramos",
+        gol: 17,
+        assistencia: 9,
+        destaque: 10,
+        hatTrick: 3,
+        url: "https://avatars0.githubusercontent.com/u/22670119?v=4"
+      },
+      {
+        id: 6,
+        nome: "Marllon Nascimento Ramos",
+        gol: 17,
+        assistencia: 9,
+        destaque: 10,
+        hatTrick: 3,
+        url: "https://avatars0.githubusercontent.com/u/22670119?v=4"
+      }
+    ]
   };
 
   async componentDidMount() {
@@ -77,58 +78,61 @@ class ListPlayer extends Component {
 
   render() {
     return (
-      <List className="list-player-root">
-        {this.state.players.map(player=>
+      <>
+        <Header />
+        <List className="list-player-root">
+          {this.state.players.map(player =>
             <Fragment key={player.id}>
-                <ListItem alignItems="flex-start">
+              <ListItem alignItems="flex-start">
                 <IconImg url={player.url} />
                 <ListItemText
-                    primary={player.nome}
-                    secondary={
+                  primary={player.nome}
+                  secondary={
                     <Fragment>
-                        <Typography
+                      <Typography
                         component="span"
                         variant="body2"
                         className="list-player-inline"
                         color="textPrimary"
-                        >
+                      >
                         Gol(s): {player.gol}
-                        </Typography>
-                        <br />
-                        <Typography
+                      </Typography>
+                      <br />
+                      <Typography
                         component="span"
                         variant="body2"
                         className="list-player-inline"
                         color="textPrimary"
-                        >
+                      >
                         Assistência(s): {player.assistencia}
-                        </Typography>
-                        <br />
-                        <Typography
+                      </Typography>
+                      <br />
+                      <Typography
                         component="span"
                         variant="body2"
                         className="list-player-inline"
                         color="textPrimary"
-                        >
+                      >
                         Jogador da partida: {player.destaque}
-                        </Typography>
-                        <br />
-                        <Typography
+                      </Typography>
+                      <br />
+                      <Typography
                         component="span"
                         variant="body2"
                         className="list-player-inline"
                         color="textPrimary"
-                        >
+                      >
                         Hat-trick(s): {player.hatTrick}
-                        </Typography>
+                      </Typography>
                     </Fragment>
-                    }
+                  }
                 />
-                </ListItem>
-                <Divider variant="inset" component="li" />
+              </ListItem>
+              <Divider variant="inset" component="li" />
             </Fragment>
-        )}
-      </List>
+          )}
+        </List>
+      </>
     );
   }
 }
