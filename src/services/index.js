@@ -31,7 +31,7 @@ export const updatePlayer = async (player) => {
 
 export const deletePlayer = (id) => {
     try {
-        const result = axios.delete(`${URL}/jogador`, id);
+        const result = axios.delete(`${URL}/jogador/${id}`);
         return result;
     } catch (error) {
         console.error('Fail on deletePlayer', error);

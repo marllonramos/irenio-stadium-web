@@ -7,81 +7,63 @@ import Typography from "@material-ui/core/Typography";
 import IconImg from "../IconImg";
 import { Button } from "@material-ui/core";
 import ModalCreatePlayer from "../ModalCreatePlayer";
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import { TextField } from "@material-ui/core";
-import { getPlayers, insertPlayer, updatePlayer, deletePlayer } from "../../services";
+import {
+  getPlayers,
+  insertPlayer,
+  updatePlayer,
+  deletePlayer
+} from "../../services";
 
 class CrudPlayer extends Component {
   state = {
-    players: [
-      {
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3,
-        url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
-      },
-      {
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3,
-        url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
-      },
-      {
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3,
-        url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
-      },
-      {
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3,
-        url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
-      },
-      {
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3,
-        url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
-      },
-      {
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3,
-        url:"https://avatars0.githubusercontent.com/u/22670119?v=4"
-      }
-    ],
-    open: false
+    players: [],
+    open: false,
+    nomeInput: "",
+    golInput: "",
+    assistenciaInput: "",
+    jogadorDaPartidaInput: "",
+    hatTrickInput: ""
   };
+
+  async componentDidMount() {
+    const listPlayers = await getPlayers();
+    this.setState({ players: listPlayers.data });
+  }
 
   render() {
     const { players, open } = this.state;
 
-    const handleRemove = (id) => {
+    const handleRemove = id => {
+      deletePlayer(id);
       console.log(id);
     };
 
     const handleUpdate = () => {
-      console.log('Atualizado!');
+      const player = {
+        nomeInput: this.state.nomeInput,
+        golInput: this.state.golInput,
+        assistenciaInput: this.state.assistenciaInput,
+        jogadorDaPartidaInput: this.state.jogadorDaPartidaInput,
+        hatTrickInput: this.state.hatTrickInput
+      };
+
+      updatePlayer(player);
       this.setState({ open: false });
     };
 
-    const handleClickOpenUpdate = () => {
+    const handleClickOpenUpdate = player => {
+      this.setState({
+        nomeInput: player.nome,
+        golInput: player.gol,
+        assistenciaInput: player.assistencia,
+        jogadorDaPartidaInput: player.jogadorDaPartida,
+        hatTrickInput: player.hatTrick
+      });
       this.setState({ open: true });
     };
 
@@ -95,7 +77,7 @@ class CrudPlayer extends Component {
           {players.map(player => (
             <Fragment key={player.id}>
               <ListItem alignItems="flex-start">
-                <IconImg url={player.url} />
+                <IconImg url={player.foto} />
                 <ListItemText
                   primary={player.nome}
                   secondary={
@@ -124,7 +106,7 @@ class CrudPlayer extends Component {
                         className="list-player-inline"
                         color="textPrimary"
                       >
-                        Jogador da partida: {player.destaque}
+                        Jogador da partida: {player.jogadorDaPartida}
                       </Typography>
                       <br />
                       <Typography
@@ -138,11 +120,19 @@ class CrudPlayer extends Component {
                     </Fragment>
                   }
                 />
-                <Button variant="contained" color="primary" onClick={handleClickOpenUpdate}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleClickOpenUpdate(player)}
+                >
                   <i className="fa fa-pen fa-1x"></i>
                 </Button>
                 &nbsp;&nbsp;
-                <Button variant="contained" color="secondary" onClick={() => handleRemove(player.id)}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => handleRemove(player.id)}
+                >
                   <i className="fa fa-trash-alt fa-1x"></i>
                 </Button>
               </ListItem>
@@ -152,7 +142,11 @@ class CrudPlayer extends Component {
         </List>
         <ModalCreatePlayer />
         <div>
-          <Dialog open={open} onClose={handleCloseUpdate} aria-labelledby="form-dialog-title">
+          <Dialog
+            open={open}
+            onClose={handleCloseUpdate}
+            aria-labelledby="form-dialog-title"
+          >
             <DialogTitle id="form-dialog-title">Atualizar Jogador</DialogTitle>
             <DialogContent>
               <TextField
@@ -163,6 +157,8 @@ class CrudPlayer extends Component {
                 type="text"
                 fullWidth
                 disabled={true}
+                value={this.state.nomeInput}
+                onChange={e => this.setState({ nomeInput: e.target.value })}
               />
               <TextField
                 margin="dense"
@@ -170,6 +166,8 @@ class CrudPlayer extends Component {
                 label="Gol(s)"
                 type="number"
                 fullWidth
+                value={this.state.golInput}
+                onChange={e => this.setState({ golInput: e.target.value })}
               />
               <TextField
                 margin="dense"
@@ -177,6 +175,10 @@ class CrudPlayer extends Component {
                 label="Assistência(s)"
                 type="number"
                 fullWidth
+                value={this.state.assistenciaInput}
+                onChange={e =>
+                  this.setState({ assistenciaInput: e.target.value })
+                }
               />
               <TextField
                 margin="dense"
@@ -184,6 +186,10 @@ class CrudPlayer extends Component {
                 label="Jogador da partida"
                 type="number"
                 fullWidth
+                value={this.state.jogadorDaPartidaInput}
+                onChange={e =>
+                  this.setState({ jogadorDaPartidaInput: e.target.value })
+                }
               />
               <TextField
                 margin="dense"
@@ -191,6 +197,8 @@ class CrudPlayer extends Component {
                 label="Hat-trick"
                 type="number"
                 fullWidth
+                value={this.state.hatTrickInput}
+                onChange={e => this.setState({ hatTrickInput: e.target.value })}
               />
             </DialogContent>
             <DialogActions>
