@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import Header from '../Header';
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
@@ -22,58 +23,61 @@ class ListPlayer extends Component {
 
   render() {
     return (
-      <List className="list-player-root">
-        {this.state.players.map(player=>
+      <>
+        <Header />
+        <List className="list-player-root">
+          {this.state.players.map(player =>
             <Fragment key={player.id}>
                 <ListItem alignItems="flex-start">
                 <IconImg url={player.foto} />
                 <ListItemText
-                    primary={player.nome}
-                    secondary={
+                  primary={player.nome}
+                  secondary={
                     <Fragment>
-                        <Typography
+                      <Typography
                         component="span"
                         variant="body2"
                         className="list-player-inline"
                         color="textPrimary"
-                        >
+                      >
                         Gol(s): {player.gol}
-                        </Typography>
-                        <br />
-                        <Typography
+                      </Typography>
+                      <br />
+                      <Typography
                         component="span"
                         variant="body2"
                         className="list-player-inline"
                         color="textPrimary"
-                        >
+                      >
                         Assistência(s): {player.assistencia}
-                        </Typography>
-                        <br />
-                        <Typography
+                      </Typography>
+                      <br />
+                      <Typography
                         component="span"
                         variant="body2"
                         className="list-player-inline"
                         color="textPrimary"
-                        >
+                      >
                         Jogador da partida: {player.jogadorDaPartida}
-                        </Typography>
-                        <br />
-                        <Typography
+                      </Typography>
+                      <br />
+                      <Typography
                         component="span"
                         variant="body2"
                         className="list-player-inline"
                         color="textPrimary"
                         >
                         Hat-trick(s): {player.hatTrick}
-                        </Typography>
+                      </Typography>
                     </Fragment>
-                    }
+                  }
                 />
-                </ListItem>
-                <Divider variant="inset" component="li" />
+              </ListItem>
+              <Divider variant="inset" component="li" />
             </Fragment>
-        )}
-      </List>
+          )}
+        </List>
+      </>
     );
   }
 }
