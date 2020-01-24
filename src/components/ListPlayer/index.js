@@ -13,67 +13,12 @@ import "./index.css";
 
 class ListPlayer extends Component {
   state = {
-    players: [
-      {
-        id: 1,
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3,
-        url: "https://avatars0.githubusercontent.com/u/22670119?v=4"
-      },
-      {
-        id: 2,
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3,
-        url: "https://avatars0.githubusercontent.com/u/22670119?v=4"
-      },
-      {
-        id: 3,
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3,
-        url: "https://avatars0.githubusercontent.com/u/22670119?v=4"
-      },
-      {
-        id: 4,
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3,
-        url: "https://avatars0.githubusercontent.com/u/22670119?v=4"
-      },
-      {
-        id: 5,
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3,
-        url: "https://avatars0.githubusercontent.com/u/22670119?v=4"
-      },
-      {
-        id: 6,
-        nome: "Marllon Nascimento Ramos",
-        gol: 17,
-        assistencia: 9,
-        destaque: 10,
-        hatTrick: 3,
-        url: "https://avatars0.githubusercontent.com/u/22670119?v=4"
-      }
-    ]
+    players: []
   };
 
   async componentDidMount() {
     const listPlayers = await getPlayers();
-    // console.log(listPlayers.data);
+    this.setState({ players: listPlayers.data });
   }
 
   render() {
@@ -83,8 +28,8 @@ class ListPlayer extends Component {
         <List className="list-player-root">
           {this.state.players.map(player =>
             <Fragment key={player.id}>
-              <ListItem alignItems="flex-start">
-                <IconImg url={player.url} />
+                <ListItem alignItems="flex-start">
+                <IconImg url={player.foto} />
                 <ListItemText
                   primary={player.nome}
                   secondary={
@@ -113,7 +58,7 @@ class ListPlayer extends Component {
                         className="list-player-inline"
                         color="textPrimary"
                       >
-                        Jogador da partida: {player.destaque}
+                        Jogador da partida: {player.jogadorDaPartida}
                       </Typography>
                       <br />
                       <Typography
@@ -121,7 +66,7 @@ class ListPlayer extends Component {
                         variant="body2"
                         className="list-player-inline"
                         color="textPrimary"
-                      >
+                        >
                         Hat-trick(s): {player.hatTrick}
                       </Typography>
                     </Fragment>

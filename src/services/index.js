@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const URL = 'https://jsonplaceholder.typicode.com';
+const URL = 'http://is-backend-hml.herokuapp.com';
 
 export const getPlayers = async () => {
     try {
-        const players = await axios.get(`${URL}/users`);
+        const players = await axios.get(`${URL}/jogador`);
         return players;
     } catch (error) {
         console.error('Fail on getPlayer', error);
@@ -13,7 +13,7 @@ export const getPlayers = async () => {
 
 export const insertPlayer = async (player) => {
     try {
-        const result = await axios.post(`${URL}/`, player);
+        const result = await axios.post(`${URL}/jogador`, player);
         return result;
     } catch (error) {
         console.error('Fail on insertPlayer', error);
@@ -22,7 +22,7 @@ export const insertPlayer = async (player) => {
 
 export const updatePlayer = async (player) => {
     try {
-        const result = await axios.put(`${URL}/...`, player);
+        const result = await axios.put(`${URL}/jogador`, player);
         return result;
     } catch (error) {
         console.error('Fail on updatePlayer', error);
@@ -31,7 +31,7 @@ export const updatePlayer = async (player) => {
 
 export const deletePlayer = (id) => {
     try {
-        const result = axios.delete(`${URL}`, id);
+        const result = axios.delete(`${URL}/jogador`, id);
         return result;
     } catch (error) {
         console.error('Fail on deletePlayer', error);
