@@ -28,12 +28,12 @@ class ModalCreatePlayer extends Component {
 
   handleInsert = () => {
     const player = {
-      nomeInsertInput: this.state.nomeInsertInput, 
-      golInsertInput: this.state.golInsertInput, 
-      assistenciaInsertInput: this.state.assistenciaInsertInput, 
-      jogadorDaPartidaInsertInput: this.state.jogadorDaPartidaInsertInput, 
-      hatTrickInsertInput: this.state.hatTrickInsertInput, 
-      fotoInsertInput: "https://avatars1.githubusercontent.com/u/53950099?v=4"
+      nome: this.state.nomeInsertInput, 
+      gol: this.state.golInsertInput, 
+      assistencia: this.state.assistenciaInsertInput, 
+      jogadorDaPartida: this.state.jogadorDaPartidaInsertInput, 
+      hatTrick: this.state.hatTrickInsertInput, 
+      foto: ""
     }
     
     insertPlayer(player);
