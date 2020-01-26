@@ -18,7 +18,6 @@ class ListPlayer extends Component {
 
   async componentDidMount() {
     const listPlayers = await getPlayers();
-    console.log(listPlayers);
     this.setState({ players: listPlayers.data });
   }
 

@@ -37,7 +37,6 @@ class ModalCreatePlayer extends Component {
     }
     
     insertPlayer(player);
-    console.log("Cadastrado!");
     this.setState({ open: false });
   };
 

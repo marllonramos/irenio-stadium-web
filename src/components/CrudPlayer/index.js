@@ -40,7 +40,6 @@ class CrudPlayer extends Component {
 
     const handleRemove = id => {
       deletePlayer(id);
-      console.log(id);
     };
 
     const handleUpdate = () => {
@@ -53,7 +52,7 @@ class CrudPlayer extends Component {
         hatTrick: this.state.hatTrickInput, 
         foto: ""
       };
-      // console.log(player);
+      
       updatePlayer(player);
       this.setState({ open: false });
     };
