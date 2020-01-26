@@ -14,7 +14,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { TextField } from "@material-ui/core";
 import {
   getPlayers,
-  insertPlayer,
   updatePlayer,
   deletePlayer
 } from "../../services";
@@ -23,11 +22,12 @@ class CrudPlayer extends Component {
   state = {
     players: [],
     open: false,
+    idInput: "",
     nomeInput: "",
-    golInput: "",
-    assistenciaInput: "",
-    jogadorDaPartidaInput: "",
-    hatTrickInput: ""
+    golInput: 0,
+    assistenciaInput: 0,
+    jogadorDaPartidaInput: 0,
+    hatTrickInput: 0
   };
 
   async componentDidMount() {
@@ -40,24 +40,26 @@ class CrudPlayer extends Component {
 
     const handleRemove = id => {
       deletePlayer(id);
-      console.log(id);
     };
 
     const handleUpdate = () => {
       const player = {
-        nomeInput: this.state.nomeInput,
-        golInput: this.state.golInput,
-        assistenciaInput: this.state.assistenciaInput,
-        jogadorDaPartidaInput: this.state.jogadorDaPartidaInput,
-        hatTrickInput: this.state.hatTrickInput
+        id: this.state.idInput,
+        nome: this.state.nomeInput,
+        gol: this.state.golInput,
+        assistencia: this.state.assistenciaInput,
+        jogadorDaPartida: this.state.jogadorDaPartidaInput,
+        hatTrick: this.state.hatTrickInput, 
+        foto: ""
       };
-
+      
       updatePlayer(player);
       this.setState({ open: false });
     };
 
     const handleClickOpenUpdate = player => {
       this.setState({
+        idInput: player.id,
         nomeInput: player.nome,
         golInput: player.gol,
         assistenciaInput: player.assistencia,
@@ -167,7 +169,7 @@ class CrudPlayer extends Component {
                 type="number"
                 fullWidth
                 value={this.state.golInput}
-                onChange={e => this.setState({ golInput: e.target.value })}
+                onChange={e => this.setState({ golInput: e.target.valueAsNumber })}
               />
               <TextField
                 margin="dense"
@@ -177,7 +179,7 @@ class CrudPlayer extends Component {
                 fullWidth
                 value={this.state.assistenciaInput}
                 onChange={e =>
-                  this.setState({ assistenciaInput: e.target.value })
+                  this.setState({ assistenciaInput: e.target.valueAsNumber })
                 }
               />
               <TextField
@@ -188,7 +190,7 @@ class CrudPlayer extends Component {
                 fullWidth
                 value={this.state.jogadorDaPartidaInput}
                 onChange={e =>
-                  this.setState({ jogadorDaPartidaInput: e.target.value })
+                  this.setState({ jogadorDaPartidaInput: e.target.valueAsNumber })
                 }
               />
               <TextField
@@ -198,7 +200,7 @@ class CrudPlayer extends Component {
                 type="number"
                 fullWidth
                 value={this.state.hatTrickInput}
-                onChange={e => this.setState({ hatTrickInput: e.target.value })}
+                onChange={e => this.setState({ hatTrickInput: e.target.valueAsNumber })}
               />
             </DialogContent>
             <DialogActions>
