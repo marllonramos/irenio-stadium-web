@@ -1,13 +1,14 @@
 import axios from 'axios';
 
 const URL = 'http://is-backend-hml.herokuapp.com';
+// const URL = 'https://localhost:5001';
 
 export const getPlayers = async () => {
     try {
         const players = await axios.get(`${URL}/jogadores`);
         return players;
     } catch (error) {
-        console.error('Fail on getPlayer', error);
+        console.error('Fail on getPlayer: ', error);
     }
 }
 
@@ -16,7 +17,7 @@ export const insertPlayer = async (player) => {
         const result = await axios.post(`${URL}/jogadores`, player);
         return result;
     } catch (error) {
-        console.error('Fail on insertPlayer', error);
+        console.error('Fail on insertPlayer: ', error);
     }
 }
 
@@ -25,7 +26,7 @@ export const updatePlayer = async (player) => {
         const result = await axios.put(`${URL}/jogadores`, player);
         return result;
     } catch (error) {
-        console.error('Fail on updatePlayer', error);
+        console.error('Fail on updatePlayer: ', error);
     }
 }
 
@@ -34,6 +35,6 @@ export const deletePlayer = (id) => {
         const result = axios.delete(`${URL}/jogadores/${id}`);
         return result;
     } catch (error) {
-        console.error('Fail on deletePlayer', error);
+        console.error('Fail on deletePlayer: ', error);
     }
 }

@@ -12,11 +12,15 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { TextField } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import {
   getPlayers,
   updatePlayer,
   deletePlayer
 } from "../../services";
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 
 class CrudPlayer extends Component {
   state = {
@@ -27,7 +31,14 @@ class CrudPlayer extends Component {
     golInput: 0,
     assistenciaInput: 0,
     jogadorDaPartidaInput: 0,
-    hatTrickInput: 0
+    hatTrickInput: 0,
+    croppedImageUrl: "",
+    src: null,
+    crop: {
+      unit: "%",
+      width: 30,
+      aspect: 16 / 16
+    }
   };
 
   async componentDidMount() {
@@ -35,43 +46,104 @@ class CrudPlayer extends Component {
     this.setState({ players: listPlayers.data });
   }
 
+  handleRemove = id => {
+    deletePlayer(id);
+  };
+
+  handleCloseUpdate = () => {
+    this.setState({ open: false });
+  };
+
+  handleUpdate = async () => {
+    const player = {
+      id: this.state.idInput,
+      nome: this.state.nomeInput,
+      gol: this.state.golInput,
+      assistencia: this.state.assistenciaInput,
+      jogadorDaPartida: this.state.jogadorDaPartidaInput,
+      hatTrick: this.state.hatTrickInput,
+      foto: this.state.croppedImageUrl,
+    };
+
+    await updatePlayer(player);
+    this.setState({ open: false });
+  };
+
+  handleClickOpenUpdate = player => {
+    this.setState({
+      idInput: player.id,
+      nomeInput: player.nome,
+      golInput: player.gol,
+      assistenciaInput: player.assistencia,
+      jogadorDaPartidaInput: player.jogadorDaPartida,
+      hatTrickInput: player.hatTrick,
+      croppedImageUrl: player.foto,
+    });
+    this.setState({ open: true });
+  };
+
+  handleEditPicture = () => {
+    const fileInput = document.querySelector('#imageInput');
+    fileInput.click();
+  }
+
+  onSelectFile = e => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () =>
+        this.setState({ src: reader.result })
+      );
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  onImageLoaded = image => {
+    this.imageRef = image;
+  };
+  onCropComplete = crop => {
+    this.makeClientCrop(crop);
+  };
+  onCropChange = (crop) => {
+    this.setState({ crop });
+  };
+
+  async makeClientCrop(crop) {
+    if (this.imageRef && crop.width && crop.height) {
+      const croppedImageUrl = await this.getCroppedImg(
+        this.imageRef,
+        crop
+      );
+      this.setState({ croppedImageUrl });
+    }
+  }
+
+  getCroppedImg(image, crop) {
+    const canvas = document.createElement("canvas");
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    canvas.width = crop.width;
+    canvas.height = crop.height;
+    const ctx = canvas.getContext("2d");
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width,
+      crop.height
+    );
+
+    const base64Image = canvas.toDataURL('image/jpeg');
+
+    return base64Image;
+  }
+
   render() {
-    const { players, open } = this.state;
-
-    const handleRemove = id => {
-      deletePlayer(id);
-    };
-
-    const handleUpdate = () => {
-      const player = {
-        id: this.state.idInput,
-        nome: this.state.nomeInput,
-        gol: this.state.golInput,
-        assistencia: this.state.assistenciaInput,
-        jogadorDaPartida: this.state.jogadorDaPartidaInput,
-        hatTrick: this.state.hatTrickInput, 
-        foto: ""
-      };
-      
-      updatePlayer(player);
-      this.setState({ open: false });
-    };
-
-    const handleClickOpenUpdate = player => {
-      this.setState({
-        idInput: player.id,
-        nomeInput: player.nome,
-        golInput: player.gol,
-        assistenciaInput: player.assistencia,
-        jogadorDaPartidaInput: player.jogadorDaPartida,
-        hatTrickInput: player.hatTrick
-      });
-      this.setState({ open: true });
-    };
-
-    const handleCloseUpdate = () => {
-      this.setState({ open: false });
-    };
+    const { crop, croppedImageUrl, src, players, open } = this.state;
 
     return (
       <Fragment>
@@ -125,7 +197,7 @@ class CrudPlayer extends Component {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => handleClickOpenUpdate(player)}
+                  onClick={() => this.handleClickOpenUpdate(player)}
                 >
                   <i className="fa fa-pen fa-1x"></i>
                 </Button>
@@ -133,7 +205,7 @@ class CrudPlayer extends Component {
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClick={() => handleRemove(player.id)}
+                  onClick={() => this.handleRemove(player.id)}
                 >
                   <i className="fa fa-trash-alt fa-1x"></i>
                 </Button>
@@ -146,7 +218,7 @@ class CrudPlayer extends Component {
         <div>
           <Dialog
             open={open}
-            onClose={handleCloseUpdate}
+            onClose={this.handleCloseUpdate}
             aria-labelledby="form-dialog-title"
           >
             <DialogTitle id="form-dialog-title">Atualizar Jogador</DialogTitle>
@@ -202,12 +274,41 @@ class CrudPlayer extends Component {
                 value={this.state.hatTrickInput}
                 onChange={e => this.setState({ hatTrickInput: e.target.valueAsNumber })}
               />
+              <input
+                id="foto"
+                type="text"
+                hidden="hidden"
+                value={this.state.croppedImageUrl}
+              />
+              <input
+                type="file"
+                id="imageInput"
+                accept="image/*"
+                hidden="hidden"
+                onChange={this.onSelectFile}
+              />
+              {src && (
+                <ReactCrop
+                  src={src}
+                  crop={crop}
+                  ruleOfThirds
+                  onImageLoaded={this.onImageLoaded}
+                  onComplete={this.onCropComplete}
+                  onChange={this.onCropChange}
+                />
+              )}
+              {croppedImageUrl && (
+                <img alt="Crop" style={{ maxWidth: "100%" }} src={croppedImageUrl} />
+              )}
+              <IconButton onClick={this.handleEditPicture} className="button">
+                <PhotoCamera color="primary" fontSize="large" />
+              </IconButton>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleCloseUpdate} color="secondary">
+              <Button onClick={this.handleCloseUpdate} color="secondary">
                 Cancelar
               </Button>
-              <Button onClick={handleUpdate} color="primary">
+              <Button onClick={this.handleUpdate} color="primary">
                 Atualizar
               </Button>
             </DialogActions>
