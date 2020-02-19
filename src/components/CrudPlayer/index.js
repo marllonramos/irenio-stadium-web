@@ -11,7 +11,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { TextField } from "@material-ui/core";
+import { TextField, Checkbox, FormControlLabel } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import {
@@ -38,7 +38,8 @@ class CrudPlayer extends Component {
       unit: "%",
       width: 30,
       aspect: 16 / 16
-    }
+    },
+    checkedFoto: false
   };
 
   async componentDidMount() {
@@ -63,6 +64,7 @@ class CrudPlayer extends Component {
       jogadorDaPartida: this.state.jogadorDaPartidaInput,
       hatTrick: this.state.hatTrickInput,
       foto: this.state.croppedImageUrl,
+      updateFoto: this.state.checkedFoto,
     };
 
     await updatePlayer(player);
@@ -140,6 +142,11 @@ class CrudPlayer extends Component {
     const base64Image = canvas.toDataURL('image/jpeg');
 
     return base64Image;
+  }
+
+  handleChangeCheckFoto = () => {
+    const { checkedFoto } = this.state;
+    this.setState({ checkedFoto: !checkedFoto });
   }
 
   render() {
@@ -274,11 +281,26 @@ class CrudPlayer extends Component {
                 value={this.state.hatTrickInput}
                 onChange={e => this.setState({ hatTrickInput: e.target.valueAsNumber })}
               />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={this.state.checkedFoto}
+                    onChange={this.handleChangeCheckFoto}
+                    value={this.state.checkedFoto}
+                    color="primary"
+                    id="chkPhoto"
+                    name="chkPhoto"
+                  />
+                }
+                label="Atualizar Foto?"
+              />
+              <br />
               <input
                 id="foto"
                 type="text"
                 hidden="hidden"
                 value={this.state.croppedImageUrl}
+                readOnly
               />
               <input
                 type="file"
