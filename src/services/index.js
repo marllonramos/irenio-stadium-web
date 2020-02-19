@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const URL = 'http://is-backend-hml.herokuapp.com';
-const URL = 'https://localhost:5001';
+const URL = 'http://is-backend-hml.herokuapp.com';
+// const URL = 'https://localhost:5001';
 
 export const getPlayers = async () => {
     try {
